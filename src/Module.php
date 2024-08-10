@@ -3,7 +3,7 @@
 namespace hesabro\helpers;
 
 use Yii;
-use yii\base\Model as BaseModule;
+use yii\base\Module as BaseModule;
 
 class Module extends BaseModule
 {
