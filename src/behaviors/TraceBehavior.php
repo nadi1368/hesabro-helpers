@@ -2,7 +2,6 @@
 
 namespace hesabro\helpers\behaviors;
 
-use common\components\Helper;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
@@ -28,7 +27,6 @@ class TraceBehavior extends \yii\base\Behavior
 
     public function afterValidate()
     {
-        $helper = new Helper();
         if ($this->owner->hasErrors() && !in_array($this->ownerClassName, $this->excludeClass)) {
             $log = [
                 'errors' => $this->owner->getErrors(),
@@ -39,12 +37,12 @@ class TraceBehavior extends \yii\base\Behavior
                     foreach ($this->owner->getErrors() as $attribute => $errorMsg) {
                         if (ArrayHelper::isIn(Yii::$app->id, ['app-backend', 'app-managerBranch'])) {
                             if (Yii::$app->request->isAjax) {
-                                Yii::$app->params['errorHiddenAjax'] .= $this->owner->getAttributeLabel($attribute) . '=>' . (is_array($errorMsg) ? $helper->arrayToString($errorMsg, false) : $errorMsg);
+                                Yii::$app->params['errorHiddenAjax'] .= $this->owner->getAttributeLabel($attribute) . '=>' . (is_array($errorMsg) ? Yii::$app->helper->arrayToString($errorMsg, false) : $errorMsg);
                             } else {
-                                Yii::$app->params['errorHidden'] .= $this->owner->getAttributeLabel($attribute) . '=>' . (is_array($errorMsg) ? $helper->arrayToString($errorMsg, false) : $errorMsg);
+                                Yii::$app->params['errorHidden'] .= $this->owner->getAttributeLabel($attribute) . '=>' . (is_array($errorMsg) ? Yii::$app->helper->arrayToString($errorMsg, false) : $errorMsg);
                             }
                         } elseif (ArrayHelper::isIn(Yii::$app->id, ['app-api'])) {
-                            Yii::$app->params['errorHidden'] .= (is_array($errorMsg) ? $helper->arrayToString($errorMsg, false) : $errorMsg);
+                            Yii::$app->params['errorHidden'] .= (is_array($errorMsg) ? Yii::$app->helper->arrayToString($errorMsg, false) : $errorMsg);
                         }
                     }
                     if (ArrayHelper::isIn(Yii::$app->id, ['app-backend']) && !empty(Yii::$app->params['errorHidden'])) {

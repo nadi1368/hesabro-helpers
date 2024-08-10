@@ -2,7 +2,7 @@
 
 namespace hesabro\helpers\behaviors;
 
-use common\models\mongo\MGLogs;
+use hesabro\helpers\models\MGLogs;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\db\BaseActiveRecord;
