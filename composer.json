@@ -1,0 +1,38 @@
+{
+    "name": "hesabro/herlpers",
+    "version": "1.0.0",
+    "description": "Hesabro helpers package",
+    "type": "yii2-extension",
+    "license": "BSD-3-Clause",
+    "autoload": {
+        "psr-4": {
+            "hesabro\\helpers\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Moslem Tayari",
+            "email": "avapardazmota@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=8.0",
+        "yiisoft/yii2": "~2.0.14",
+        "yiisoft/yii2-mongodb": "^3.0"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
+        }
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^6.4"
+    }
+}
