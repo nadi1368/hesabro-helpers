@@ -16,19 +16,27 @@ use yii\helpers\Html;
  */
 class LogBehavior extends \yii\base\Behavior
 {
-    public $ownerClassName;
-    public $excludeAttribute = [];
-    public $includeAttribute = [];
-    public $necessaryAttribute = [];
-    public $notOnNullValueAttributes = [];
-    public $saveAfterInsert = false;
-    public $savePostDataAfterInsert = false; // ذخیره اطلاعات ارسالی فرم بعد از ایجاد
-    public $savePostDataAfterUpdate = false; // ذخیره اطلاعات ارسالی فرم بعد از بروز رسانی
-    public MGLogs $modelLog;
-
-	public $hasSlaveId = true;
-
     public string $ownerPrimaryKey = 'id';
+
+    public mixed $clientId = null;
+
+    public mixed $ownerClassName = null;
+
+    public array $excludeAttribute = [];
+
+    public array $includeAttribute = [];
+
+    public array $necessaryAttribute = [];
+
+    public array $notOnNullValueAttributes = [];
+
+    public bool $saveAfterInsert = false;
+
+    public bool $savePostDataAfterInsert = false;
+
+    public bool $savePostDataAfterUpdate = false;
+
+    public MGLogs $modelLog;
 
     public function events()
     {
@@ -76,7 +84,7 @@ class LogBehavior extends \yii\base\Behavior
             if ($change) {
                 try {
                     $model = new MGLogs();
-                    $model->client_id = $this->hasSlaveId ? Yii::$app->client->id : null;
+                    $model->client_id = $this->clientId;
                     $model->model_class = $this->ownerClassName;
                     $model->model_id = (int)$this->owner->{$this->ownerPrimaryKey};
                     $model->logs = $logs;
@@ -140,7 +148,7 @@ class LogBehavior extends \yii\base\Behavior
         if ($change) {
             try {
                 $model = new MGLogs();
-                $model->client_id = $this->hasSlaveId ? Yii::$app->client->id : null;;
+                $model->client_id = $this->clientId;
                 $model->model_class = $this->ownerClassName;
                 $model->model_id = (int)$this->owner->{$this->ownerPrimaryKey};;
                 $model->logs = $logs;
