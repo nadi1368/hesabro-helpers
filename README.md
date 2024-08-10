@@ -9,7 +9,7 @@ To install this package from GitLab will need a Personal Access Token. You can i
 Next, from the terminal. Run the following command.
 
 ```shell
-composer config --global --auth gitlab-token.gitlab.com PAT_TOKEN
+composer config --global --auth gitlab-token.git.abrsa.ir PAT_TOKEN
 ```
 
 Replace the `PAT_TOKEN` with the token you generated from first step.
