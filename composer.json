@@ -1,5 +1,5 @@
 {
-    "name": "hesabro/herlpers",
+    "name": "hesabro/helpers",
     "version": "1.0.0",
     "description": "Hesabro helpers package",
     "type": "yii2-extension",
