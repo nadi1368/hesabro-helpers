@@ -1,26 +1,29 @@
 {
     "name": "hesabro/helpers",
-    "version": "1.0.0",
-    "description": "Hesabro helpers package",
+    "version": "1.0.1",
+    "description": "Hesabro helpers module",
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
-    "autoload": {
-        "psr-4": {
-            "hesabro\\helpers\\": "src/"
-        }
-    },
     "authors": [
         {
             "name": "Moslem Tayari",
             "email": "avapardazmota@gmail.com"
         }
     ],
-    "minimum-stability": "stable",
     "require": {
         "php": ">=8.0",
         "yiisoft/yii2": "~2.0.14",
         "yiisoft/yii2-mongodb": "^3.0"
     },
+    "require-dev": {
+        "symfony/var-dumper": "^6.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "hesabro\\helpers\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
     "repositories": [
         {
             "type": "composer",
@@ -32,7 +35,7 @@
             "yiisoft/yii2-composer": true
         }
     },
-    "require-dev": {
-        "symfony/var-dumper": "^6.4"
+    "extra": {
+        "bootstrap": "hesabro\\helpers\\Bootstrap"
     }
 }
