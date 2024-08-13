@@ -24,7 +24,7 @@
             "hesabro\\helpers\\": "src/"
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "repositories": [
         {
             "type": "composer",
