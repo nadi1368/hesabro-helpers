@@ -1,6 +1,6 @@
 {
     "name": "hesabro/helpers",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Hesabro helpers module",
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
@@ -13,7 +13,8 @@
     "require": {
         "php": ">=8.0",
         "yiisoft/yii2": "~2.0.14",
-        "yiisoft/yii2-mongodb": "^3.0"
+        "yiisoft/yii2-bootstrap4": "^2.0",
+        "kartik-v/yii2-grid": "dev-master"
     },
     "require-dev": {
         "symfony/var-dumper": "^6.4"
