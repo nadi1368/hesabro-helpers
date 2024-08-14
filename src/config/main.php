@@ -20,6 +20,8 @@ return [
         'env' => [
             'class' => Env::class
         ],
+    ],
+    'modules' => [
         'gridview' => [
             'class' => GridModule::class
         ]

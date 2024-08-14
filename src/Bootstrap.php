@@ -17,5 +17,6 @@ class Bootstrap implements BootstrapInterface
 
         $configs = require __DIR__ . '/config/main.php';
         $app->setComponents($configs['components'] ?? []);
+        $app->setModules($configs['modules'] ?? []);
     }
 }
