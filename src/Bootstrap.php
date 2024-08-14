@@ -13,6 +13,8 @@ class Bootstrap implements BootstrapInterface
      */
     public function bootstrap($app)
     {
+        $app->params['bsVersion'] = 4;
+
         $configs = require __DIR__ . '/config/main.php';
         $app->setComponents($configs['components'] ?? []);
     }
