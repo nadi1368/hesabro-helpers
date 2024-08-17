@@ -124,7 +124,7 @@ class GridView extends KartikGridView
             ArrayHelper::merge(
                 [
                     [
-                        'class' => 'common\widgets\grid\CheckboxColumn',
+                        'class' => CheckboxColumn::class,
                         'checkboxOptions' => function ($model, $key, $index, $column) {
                             return [
                                 'class' => 'custom-control-input'
