@@ -1,10 +1,14 @@
 {
     "name": "hesabro/helpers",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Hesabro helpers module",
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
     "authors": [
+        {
+            "name": "Nader Bahadori",
+            "email": "nader.bahadorii@gmail.com"
+        },
         {
             "name": "Moslem Tayari",
             "email": "avapardazmota@gmail.com"
