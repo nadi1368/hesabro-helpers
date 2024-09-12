@@ -6,4 +6,4 @@
 composer require hesabro/helpers
 ```
 
-Last version is: `v1.0.0`
+Last version is: `v1.0.0` ;
