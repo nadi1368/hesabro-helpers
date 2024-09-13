@@ -7,6 +7,8 @@ use Yii;
 use yii\base\Component;
 use yii\base\InvalidArgumentException;
 use yii\helpers\Html;
+use yii\helpers\HtmlPurifier;
+use common\models\OauthSession;
 
 /**
  * Class Helper
@@ -105,15 +107,21 @@ class Helper extends Component
      * @param $balance
      * @return string
      */
-    public static function currencyBalance($balance)
+    public static function currencyBalance($balance, $html = true, $setTextColor = true)
     {
+        if (!$html) {
+            return $balance;
+        }
         if ($balance == 0) {
-            return '<span onclick="return copyToClipboard(' . $balance . ')"  class="text-info ltr copy">' . \Yii::$app->phpNewVer->numberFormat($balance) . '</span>';
+            $textColor = $setTextColor ? "text-info" : '';
+            return '<span onclick="return copyToClipboard(' . $balance . ')"  class="' . $textColor . ' ltr copy">' . number_format((int)$balance) . '</span>';
         } elseif ($balance > 0) {
-            return '<span onclick="return copyToClipboard(' . $balance . ')"  class="text-success ltr copy">' . \Yii::$app->phpNewVer->numberFormat($balance) . '</span>';
+            $textColor = $setTextColor ? "text-success" : '';
+            return '<span onclick="return copyToClipboard(' . $balance . ')"  class="' . $textColor . ' ltr copy">' . number_format((int)$balance) . '</span>';
         } else {
             $balance *= -1;
-            return '<span onclick="return copyToClipboard(' . ($balance) . ')"  class="text-danger ltr copy">(-' . \Yii::$app->phpNewVer->numberFormat($balance) . ')</span>';
+            $textColor = $setTextColor ? "text-danger" : '';
+            return '<span onclick="return copyToClipboard(' . ($balance) . ')"  class="' . $textColor . ' ltr copy">(-' . number_format((int)$balance) . ')</span>';
         }
     }
 
@@ -235,6 +243,46 @@ class Helper extends Component
             $labels .= '<label class="badge badge-info mr-2 mb-2">' . $title . ' </label> ';
         }
         return $labels;
+    }
+
+    public static function defaultMetaContent()
+    {
+        return 'خرید گوشی موبایل با قیمت عالی، خرید انواع گوشی سامسونگ، شیائومی، هواوی و ... با بهترین قیمت و تخفیف ویژه و سریع ترین ارسال از فروشگاه اینترنتی مبیت';
+    }
+
+    public static function purifiesFroalaContent($content)
+    {
+        if (str_contains($content, 'Powered by')) {
+            $content = preg_replace('~<p\s+data-f-id.*$~', '', $content); //(Remove Froala License)
+        }
+        //remove inline style attribute from html tag
+        $content = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $content);
+
+        $content = HtmlPurifier::process($content, function ($config) {
+            $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
+            $config->set('HTML.DefinitionID', 'html5-definitions');
+            $config->set('HTML.DefinitionRev', 1);
+            if ($def = $config->maybeGetRawHTMLDefinition()) {
+                $def->addElement('video', 'Block', 'Optional: (source, Flow) | (Flow, source) | Flow', 'Common', array(
+                    'src' => 'URI',
+                    'type' => 'Text',
+                    'width' => 'Length',
+                    'height' => 'Length',
+                    'poster' => 'URI',
+                    'preload' => 'Enum#auto,metadata,none',
+                    'controls' => 'Bool',
+                ));
+            }
+        });
+
+        $content = preg_replace('/<img/', '<img width="auto" height="auto"', $content);
+
+        return $content;
+    }
+
+    public static function debug($message, $category = null)
+    {
+        Yii::error($message, $category ?: 'Debug');
     }
 
 
@@ -372,6 +420,18 @@ class Helper extends Component
             preg_replace('/[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهیئ]/', '', $value);
     }
 
+
+    /**
+     * @param string $otp
+     * @return string
+     */
+    public static function getOtpSMSText(string $otp): string
+    {
+        $app = (Yii::$app->params['app-client-id'] ?? null);
+        $otpDomain = $app ? OauthSession::itemAlias('AppToDomain', $app) : '';
+
+        return $otpDomain ? "@$otpDomain #$otp" : ' ';
+    }
 
     public static function isMobileNumber($mobile)
     {
