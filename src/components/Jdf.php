@@ -1198,15 +1198,18 @@ class Jdf
         return round(abs($end_time - $start_time) / (60 * 60 * 24));
     }
 
-    public static function plusDay($date, $day)
+    public static function plusDay($date, $day, string $type = "plus") : string
     {
         $gDate = self::Convert_jalali_to_gregorian($date);
+        if ($type == "plus") {
+            $plusDay = strtotime('+' . $day . ' day', strtotime($gDate));
+        } else {
 
-        $plusDay = strtotime('+' . $day . ' day', strtotime($gDate));
+            $plusDay = strtotime('-' . $day . ' day', strtotime($gDate));
+        }
 
         return self::jdate("Y/m/d", $plusDay);
     }
-
 
     public static function plusYear($date, $year)
     {

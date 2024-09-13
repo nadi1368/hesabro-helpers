@@ -31,6 +31,25 @@ trait AjaxValidationTrait
     }
 
     /**
+     * @param Model $model
+     * @param null $attributes
+     * @throws \yii\base\ExitException
+     */
+    protected function performAjaxCustomError(Model $model, $attributes = null)
+    {
+        if ($model->errors) {
+            $result = [];
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            foreach ($model->getErrors($attributes) as $attribute => $errors) {
+                $result[Html::getInputId($model, $attribute)] = $errors;
+            }
+            Yii::$app->response->data = $result;
+            Yii::$app->response->send();
+            Yii::$app->end();
+        }
+    }
+
+    /**
      * Performs ajax multiple validation.
      *
      * @param Model[] $models
@@ -59,7 +78,7 @@ trait AjaxValidationTrait
      */
     protected function performAjaxBatchValidation($models)
     {
-        if (\Yii::$app->request->isAjax) {
+        if (\Yii::$app->request->isAjax && Yii::$app->request->post()) {
             \Yii::$app->response->format = Response::FORMAT_JSON;
             $errors = [];
 

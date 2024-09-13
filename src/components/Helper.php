@@ -22,10 +22,16 @@ class Helper extends Component
     const CHECKED = 1;
     const UN_CHECKED = 0;
 
+    const HIGH_URGENT_PRIORITY = 1;
+    const URGENT_PRIORITY = 5;
+    const HIGH_PRIORITY = 10;
+    const LOW_PRIORITY = 1025;
+
+    const CREATOR_ID_DEFAULT = 103;
+
     public function init()
     {
         parent::init();
-
     }
 
 
@@ -63,11 +69,36 @@ class Helper extends Component
                 self::YES => '<span class="far fa-check-circle fa-lg text-success"></span>',
                 self::NO => '<span class="far fa-minus-circle fa-lg text-danger"></span>',
             ],
+            "Month" => [
+                '01' => 'فروردین',
+                '02' => 'اردیبهشت',
+                '03' => 'خرداد',
+                '04' => 'تیر',
+                '05' => 'مرداد',
+                '06' => 'شهریور',
+                '07' => 'مهر',
+                '08' => 'آبان',
+                '09' => 'آذر',
+                '10' => 'دی',
+                '11' => 'بهمن',
+                '12' => 'اسفند',
+            ]
         ];
         if (isset($code))
             return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
         else
             return isset($_items[$type]) ? $_items[$type] : false;
+    }
+
+
+    public static function formatterIBAN($shaba)
+    {
+        return 'IR' . substr($shaba, 0, 2) . '-' . substr($shaba, 2, 4) . '-' . substr($shaba, 6, 4) . '-' . substr($shaba, 10, 4) . '-' . substr($shaba, 14, 4) . '-' . substr($shaba, 18, 4) . '-' . substr($shaba, 22, 2);
+    }
+
+    public static function formatterCart($cart)
+    {
+        return empty($cart) ? $cart : substr($cart, 0, 4) . '-' . substr($cart, 4, 4) . '-' . substr($cart, 8, 4) . '-' . substr($cart, 12, 4);
     }
 
     /**
@@ -175,6 +206,14 @@ class Helper extends Component
         return (array)$value;
     }
 
+
+    public static function getUrlRoute()
+    {
+        $currentParams = Yii::$app->getRequest()->getQueryParams();
+        $currentParams[0] = '/' . Yii::$app->controller->getRoute();
+        return array_replace_recursive($currentParams, []);
+    }
+
     public static function convertObjectToArray($items)
     {
         $data = [];
@@ -188,12 +227,16 @@ class Helper extends Component
     }
 
 
-    public static function getUrlRoute()
+
+    public static function showItemWithLabel($items)
     {
-        $currentParams = Yii::$app->getRequest()->getQueryParams();
-        $currentParams[0] = '/' . Yii::$app->controller->getRoute();
-        return array_replace_recursive($currentParams, []);
+        $labels = '';
+        foreach ($items as $index => $title) {
+            $labels .= '<label class="badge badge-info mr-2 mb-2">' . $title . ' </label> ';
+        }
+        return $labels;
     }
+
 
     public static function safeLogin()
     {
@@ -244,15 +287,19 @@ class Helper extends Component
      * @param float $taxPercent
      * @return int[]
      */
-    public static function calculateWage($amount, float $taxPercent = 10)
+    public static function calculateWage($amount, float $taxPercent = 10, float $tollPercent = 0)
     {
         $a = $amount / (100 + $taxPercent);
         $tax = (int)(round($a * $taxPercent));
+        $toll = 0;
         $realAmount = (int)($amount - $tax);
 
         return [
             'tax' => $tax,
-            'realAmount' => $realAmount
+            'toll' => $toll,
+            'wage' => $realAmount,
+            'realAmount' => $realAmount,
+            'taxAndToll' => ($tax + $toll),
         ];
     }
 
@@ -294,5 +341,40 @@ class Helper extends Component
         }
 
         return $return;
+    }
+
+
+    public static function getCurrentUser()
+    {
+        return Yii::$app->user->isGuest ?
+            (Yii::$app->params['user_id'] ?? self::CREATOR_ID_DEFAULT)
+            :
+            Yii::$app->user->id;
+    }
+
+    public static function removePersianCharacters($value, $removeSpace = false): array|string
+    {
+        $rules = [
+            'أ' => 'ا',
+            'إ' => 'ا',
+            'ك' => 'ک',
+            'ؤ' => 'و',
+            'ة' => 'ه',
+            'ۀ' => 'ه',
+            'ي' => 'ی',
+            '‌' => ' '
+        ];
+        $value = str_replace(array_keys($rules), array_values($rules), $value);
+        $value = preg_replace("/\x{200c}/u", '', $value);
+        return $removeSpace ?
+            preg_replace('/[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهیئ ]/', '', $value)
+            :
+            preg_replace('/[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهیئ]/', '', $value);
+    }
+
+
+    public static function isMobileNumber($mobile)
+    {
+        return is_numeric($mobile) && preg_match('/^([0]{1}[9]{1}[0-9]{9})$/', $mobile);
     }
 }
