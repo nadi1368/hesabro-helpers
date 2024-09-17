@@ -56,12 +56,12 @@ class Helper extends Component
 
         $_items = [
             'YesOrNo' => [
-                self::YES => Yii::t('hesabro-helper', 'Yes'),
-                self::NO => Yii::t('hesabro-helper', 'No'),
+                self::YES => Yii::t('app', 'Yes'),
+                self::NO => Yii::t('app', 'No'),
             ],
             'CheckboxTitle' => [
-                self::CHECKED => Yii::t('hesabro-helper', 'Yes'),
-                self::UN_CHECKED => Yii::t('hesabro-helper', 'No'),
+                self::CHECKED => Yii::t('app', 'Yes'),
+                self::UN_CHECKED => Yii::t('app', 'No'),
             ],
             'CheckboxIcon' => [
                 self::CHECKED => '<span class="far fa-check-circle fa-lg text-success"></span>',
@@ -288,7 +288,7 @@ class Helper extends Component
             'data-trigger' => 'click hover',
             'data-placement' => 'top',
             'data-html' => 'true',
-            'data-title' => Yii::t('hesabro-helper', 'Description'),
+            'data-title' => Yii::t('app', 'Description'),
             'data-content' => $help,
             'style' => 'text-decoration: underline; cursor:help;'
         ]);
