@@ -92,17 +92,6 @@ class Helper extends Component
             return isset($_items[$type]) ? $_items[$type] : false;
     }
 
-
-    public static function formatterIBAN($shaba)
-    {
-        return 'IR' . substr($shaba, 0, 2) . '-' . substr($shaba, 2, 4) . '-' . substr($shaba, 6, 4) . '-' . substr($shaba, 10, 4) . '-' . substr($shaba, 14, 4) . '-' . substr($shaba, 18, 4) . '-' . substr($shaba, 22, 2);
-    }
-
-    public static function formatterCart($cart)
-    {
-        return empty($cart) ? $cart : substr($cart, 0, 4) . '-' . substr($cart, 4, 4) . '-' . substr($cart, 8, 4) . '-' . substr($cart, 12, 4);
-    }
-
     /**
      * @param $balance
      * @return string
