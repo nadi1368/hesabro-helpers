@@ -7,11 +7,9 @@ namespace hesabro\helpers\components;
 use Yii;
 
 /**
- * Software Hijri_Shamsi , Solar(Jalali) Date and Time
- * Copyright(C)2011, Reza Gholampanahi , http://jdf.scr.ir
- * version 2.55 :: 1391/08/24 = 1433/12/18 = 2012/11/15
- *
- * @method jalaliToTimestamp() is used to convert jalali string date to timestamp
+ * Class Jdf
+ * @package hesabro\helpers\components
+ * @author Nader <nader.bahadorii@gmail.com>
  */
 class Jdf
 {
