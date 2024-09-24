@@ -1,6 +1,6 @@
 {
     "name": "hesabro/helpers",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "description": "Hesabro helpers module",
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
@@ -11,7 +11,7 @@
         },
         {
             "name": "Moslem Tayari",
-            "email": "avapardazmota@gmail.com"
+            "email": "motaprogrammer@yahoo.com"
         }
     ],
     "require": {
