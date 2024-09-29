@@ -1230,6 +1230,55 @@ class Jdf
             return true;
         return false;
     }
+
+    /**
+     * Returns correct names for week days
+     */
+    private static function getDayNames($day, $shorten = false, $len = 1, $numeric = false)
+    {
+        $days = array(
+            'sat' => array(1, 'شنبه'),
+            'sun' => array(2, 'یکشنبه'),
+            'mon' => array(3, 'دوشنبه'),
+            'tue' => array(4, 'سه شنبه'),
+            'wed' => array(5, 'چهارشنبه'),
+            'thu' => array(6, 'پنجشنبه'),
+            'fri' => array(7, 'جمعه')
+        );
+
+        $day = substr(strtolower($day), 0, 3);
+        $day = $days[$day];
+
+        return ($numeric) ? $day[0] : (($shorten) ? self::substr($day[1], 0, $len) : $day[1]);
+    }
+
+    /**
+     * Returns correct names for months
+     */
+    public static function getMonthNames($month, $shorten = false, $len = 3)
+    {
+        // Convert
+        $months = array(
+            'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'
+        );
+        $ret    = $months[$month - 1];
+
+        // Return
+        return ($shorten) ? self::substr($ret, 0, $len) : $ret;
+    }
+
+    /**
+     * Substring helper
+     */
+    private static function substr($str, $start, $len)
+    {
+        if( function_exists('mb_substr') ){
+            return mb_substr($str, $start, $len, 'UTF-8');
+        }
+        else{
+            return substr($str, $start, $len * 2);
+        }
+    }
 }
 
 /* [ jdf.php ] version 2.55 ?> Download new version from [ http://jdf.scr.ir ] */
