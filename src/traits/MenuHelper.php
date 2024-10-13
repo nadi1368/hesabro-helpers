@@ -14,14 +14,14 @@ trait MenuHelper
      * @param array $result
      * @return array
      */
-    public function toSearchDataRecursively($items, $main = true, &$result = [])
+    public static function toSearchDataRecursively($items, $main = true, &$result = [])
     {
         foreach ($items as $item) {
             if (isset($item['url']) && isset($item['label'])) {
                 $result[Yii::$app->urlManager->createUrl($item['url'])] = $item['label'];
             }
             if (!empty($item['items'])) {
-                $this->toSearchDataRecursively($item['items'], false, $result);
+                self::toSearchDataRecursively($item['items'], false, $result);
             }
         }
 
@@ -33,8 +33,8 @@ trait MenuHelper
      *
      * @return array
      */
-    public function searchData(): array
+    public static function searchData(): array
     {
-        return $this->toSearchDataRecursively($this->items());
+        return self::toSearchDataRecursively(self::items());
     }
 }
