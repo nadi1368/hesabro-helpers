@@ -426,4 +426,26 @@ class Helper extends Component
     {
         return is_numeric($mobile) && preg_match('/^([0]{1}[9]{1}[0-9]{9})$/', $mobile);
     }
+
+    public static function getDsnAttribute($name, $dsn)
+    {
+        if (preg_match('/' . $name . '=([^;]*)/', $dsn, $match)) {
+            return $match[1];
+        } else {
+            return null;
+        }
+    }
+
+    public static function numberToWorkTime(mixed $number)
+    {
+        $integer = (int) $number;
+        $decimal = $number - $integer;
+        $hour = $decimal * 8;
+
+        return [
+            'day' => $integer,
+            'hour' => $hour,
+            'duration' => ($integer * 24 * 60 * 60) + ($hour * 60 * 60)
+        ];
+    }
 }
