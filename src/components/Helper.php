@@ -448,9 +448,4 @@ class Helper extends Component
             'duration' => ($integer * 24 * 60 * 60) + ($hour * 60 * 60)
         ];
     }
-
-    public static function testHelper()
-    {
-        return 'test passed';
-    }
 }
