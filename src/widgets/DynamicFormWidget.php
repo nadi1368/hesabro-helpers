@@ -5,6 +5,7 @@ namespace hesabro\helpers\widgets;
 use Symfony\Component\DomCrawler\Crawler;
 use wbraganca\dynamicform\DynamicFormAsset;
 use wbraganca\dynamicform\DynamicFormWidget as DynamicFormWidgetBase;
+use yii\base\View;
 use yii\helpers\Html;
 use yii\helpers\Json;
 
@@ -48,14 +49,15 @@ class DynamicFormWidget extends DynamicFormWidgetBase
 	protected function registerOptions($view)
 	{
 		$encOptions = Json::encode($this->_options);
-		$this->_hashVar = \wbraganca\dynamicform\DynamicFormWidget::HASH_VAR_BASE_NAME . hash('crc32', $encOptions);
+        $this->_hashVar = self::WIDGET_NAME . '_' . hash('crc32', $encOptions);
 		$view->registerJs("var {$this->_hashVar} = {$encOptions};\n", $view::POS_HEAD);
 	}
 
 	/**
 	 * Registers the needed assets
-	 */
-	public function registerAssets()
+     * @param View $view
+     */
+	public function registerAssets($view)
 	{
 		$view = $this->getView();
 		DynamicFormAsset::register($view);
@@ -95,7 +97,7 @@ class DynamicFormWidget extends DynamicFormWidgetBase
 			$content = $this->removeItems($content);
 		}
 
-		$this->registerAssets();
+		$this->registerAssets($this->view);
 		echo Html::tag('div', $content, ['class' => $this->widgetContainer, 'data-dynamicform' => $this->_hashVar]);
 	}
 

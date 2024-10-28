@@ -3,14 +3,13 @@
 namespace hesabro\helpers\widgets;
 
 use diecoding\dropify\Dropify;
-use Yii;
+use hesabro\helpers\Module;
 
 class FileInput extends Dropify
 {
     public ?string $defaultFile = null;
 
     public $imgFileExtensions = [
-
         'jpeg',
         'jpg',
         'png',
@@ -22,7 +21,12 @@ class FileInput extends Dropify
     {
         $this->pluginOptions = [
             'defaultFile' => $this->defaultFile,
-            'messages' => Yii::t('app', 'Dropify')
+            'messages' => [
+                'default' => Module::t('module', 'Dropify Default'),
+                'replace' => Module::t('module', 'Dropify Replace'),
+                'remove' => Module::t('module', 'Remove'),
+                'error' => Module::t('module', 'Dropify Error'),
+            ]
         ];
 
         parent::init();
