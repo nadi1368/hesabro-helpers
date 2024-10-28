@@ -1279,6 +1279,15 @@ class Jdf
             return substr($str, $start, $len * 2);
         }
     }
+
+    function add_month(string $date, int $month = 1): string
+    {
+        $timestamp = is_numeric($date) ? $date : Jdf::jalaliToTimestamp($date);
+        [$y, $m] = explode('/', $this->jdate('Y/m/d', $timestamp, tr_num: 'en'));
+        $lastDay = $this->jdate('t', $timestamp, tr_num: 'en');
+        $nextMonth = $this->jdate('Y/m/d', $this->jmktime('23', '59', '59', $m, $lastDay, $y) + 1, tr_num: 'en');
+        return $month > 1 ? $this->add_month($nextMonth, $month - 1) : $nextMonth;
+    }
 }
 
 /* [ jdf.php ] version 2.55 ?> Download new version from [ http://jdf.scr.ir ] */
