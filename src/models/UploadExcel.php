@@ -16,6 +16,7 @@ use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use mamadali\S3Storage\behaviors\StorageUploadBehavior;
 use mamadali\S3Storage\components\S3Storage;
+use backend\models\User;
 
 /**
  * This is the model class for table "{{%upload_excel}}".
