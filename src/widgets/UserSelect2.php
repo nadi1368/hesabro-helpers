@@ -11,29 +11,33 @@ class UserSelect2 extends Select2
 {
     public string $relation = 'user';
 
-    public string $fullNameAttribute = 'fullName';
+    public string $label = 'fullName';
 
     public function init()
     {
         parent::init();
+
+        $this->setInitValueText();
+        $this->setOptions();
+        $this->setPluginOptions();
     }
 
     private function setInitValueText()
     {
-        $this->initValueText = $this->model->{$this->attribute} ? $this->model->{$this->relation}?->{$this->fullNameAttribute} : '';
+        $this->initValueText = $this->model->{$this->attribute} ? $this->model->{$this->relation}?->{$this->label} : '';
     }
 
     private function setOptions()
     {
-        $this->options = [
+        $this->options = array_merge($this->options, [
             'placeholder' => Module::t('module', 'Search'),
             'dir' => 'rtl'
-        ];
+        ]);
     }
 
     private function setPluginOptions()
     {
-        $this->pluginOptions = [
+        $this->pluginOptions = array_merge($this->pluginOptions, [
             'allowClear' => true,
             'minimumInputLength' => 3,
             'language' => [
@@ -52,6 +56,6 @@ class UserSelect2 extends Select2
             'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
             'templateResult' => new JsExpression('function(data) { return data.text; }'),
             'templateSelection' => new JsExpression('function (data) { return data.text; }'),
-        ];
+        ]);
     }
 }
