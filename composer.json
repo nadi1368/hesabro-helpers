@@ -22,7 +22,8 @@
         "kartik-v/yii2-grid": "@dev",
         "skeeks/yii2-ckeditor": "1.1.4",
         "wbraganca/yii2-dynamicform": "2.0.1",
-        "diecoding/yii2-dropify": "^1.0"
+        "diecoding/yii2-dropify": "^1.0",
+        "kartik-v/yii2-widget-select2": "^2.1.4"
     },
     "require-dev": {
         "symfony/var-dumper": "^6.4"
