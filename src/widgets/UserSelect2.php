@@ -17,14 +17,16 @@ class UserSelect2 extends Select2
     {
         parent::init();
 
-        $this->setInitValueText();
         $this->setOptions();
         $this->setPluginOptions();
+        $this->setInitValueText();
     }
 
     private function setInitValueText()
     {
-        $this->initValueText = $this->model->{$this->attribute} ? $this->model->{$this->relation}?->{$this->label} : '';
+        $this->initValueText = $this->model->{$this->attribute} ? array_map(function ($item) {
+            return $item->{$this->label};
+        }, $this->model->{$this->relation} ?: []) : [];
     }
 
     private function setOptions()
