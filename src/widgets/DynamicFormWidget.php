@@ -49,7 +49,7 @@ class DynamicFormWidget extends DynamicFormWidgetBase
 	protected function registerOptions($view)
 	{
 		$encOptions = Json::encode($this->_options);
-        $this->_hashVar = self::WIDGET_NAME . '_' . hash('crc32', $encOptions);
+        $this->_hashVar = self::HASH_VAR_BASE_NAME . '_' . hash('crc32', $encOptions);
 		$view->registerJs("var {$this->_hashVar} = {$encOptions};\n", $view::POS_HEAD);
 	}
 
@@ -57,7 +57,7 @@ class DynamicFormWidget extends DynamicFormWidgetBase
 	 * Registers the needed assets
      * @param View $view
      */
-	public function registerAssets($view)
+	public function registerAssets()
 	{
 		$view = $this->getView();
 		DynamicFormAsset::register($view);
