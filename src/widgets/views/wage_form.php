@@ -3,7 +3,7 @@
 
 use wbraganca\dynamicform\DynamicFormWidget;
 use yii\widgets\MaskedInput;
-use backend\modules\accounting\models\WageForm;
+use common\models\WageForm;
 
 /* @var $this yii\web\View */
 /* @var $model WageForm*/
