@@ -78,9 +78,7 @@ class UploadExcel extends \yii\db\ActiveRecord
             [['date'], 'validateUniqueDate', 'on' => [self::SCENARIO_UPLOAD_RollCall_DAILY]],
             [['date'], 'compare', 'compareValue' => Yii::$app->jdf->jdate("Y/m/d"), 'operator' => '<', 'type' => 'string', 'on' => [self::SCENARIO_UPLOAD_RollCall_DAILY]],
             [['file_name'], 'file', 'skipOnEmpty' => false, 'extensions' => 'xlsx', 'maxSize' => 1024 * 1024 * 50, 'on' => [self::SCENARIO_DEFAULT, self::SCENARIO_UPLOAD, self::SCENARIO_UPLOAD_ORG]],
-            [['file_name'], 'file', 'skipOnEmpty' => false,
-                'extensions' => ['xlsx', 'csv'],
-                'maxSize' => 1024 * 1024 * 50, 'on' => [self::SCENARIO_UPLOAD_RollCall_MONTHLY, self::SCENARIO_UPLOAD_RollCall_DAILY, self::SCENARIO_UPLOAD_SALARY_NON_CASH]],
+            [['file_name'], 'file', 'skipOnEmpty' => false, 'maxSize' => 1024 * 1024 * 50, 'on' => [self::SCENARIO_UPLOAD_RollCall_MONTHLY, self::SCENARIO_UPLOAD_RollCall_DAILY, self::SCENARIO_UPLOAD_SALARY_NON_CASH]],
         ];
     }
 
