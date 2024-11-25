@@ -76,18 +76,10 @@ class UploadExcel extends \yii\db\ActiveRecord
             [['month', 'file_name'], 'required', 'on' => [self::SCENARIO_UPLOAD_SALARY_NON_CASH]],
             [['date'], DateValidator::class, 'on' => [self::SCENARIO_UPLOAD_RollCall_DAILY, self::SCENARIO_UPLOAD_SALARY_NON_CASH]],
             [['date'], 'validateUniqueDate', 'on' => [self::SCENARIO_UPLOAD_RollCall_DAILY]],
-            [['date'], 'compare', 'compareValue' => Yii::$app->jdate->date("Y/m/d"), 'operator' => '<', 'type' => 'string', 'on' => [self::SCENARIO_UPLOAD_RollCall_DAILY]],
+            [['date'], 'compare', 'compareValue' => Yii::$app->jdf->jdate("Y/m/d"), 'operator' => '<', 'type' => 'string', 'on' => [self::SCENARIO_UPLOAD_RollCall_DAILY]],
             [['file_name'], 'file', 'skipOnEmpty' => false, 'extensions' => 'xlsx', 'maxSize' => 1024 * 1024 * 50, 'on' => [self::SCENARIO_DEFAULT, self::SCENARIO_UPLOAD, self::SCENARIO_UPLOAD_ORG]],
             [['file_name'], 'file', 'skipOnEmpty' => false,
-                'mimeTypes' => [
-                    'text/comma-separated-values',
-                    'text/csv',
-                    'text/plain',
-                    'application/csv',
-                    'application/excel',
-                    'application/vnd.ms-excel',
-                    'application/vnd.msexcel',
-                ],
+                'extensions' => 'xlsx',
                 'maxSize' => 1024 * 1024 * 50, 'on' => [self::SCENARIO_UPLOAD_RollCall_MONTHLY, self::SCENARIO_UPLOAD_RollCall_DAILY, self::SCENARIO_UPLOAD_SALARY_NON_CASH]],
         ];
     }
@@ -133,6 +125,7 @@ class UploadExcel extends \yii\db\ActiveRecord
             'created' => Yii::t('app', 'Created'),
             'changed' => Yii::t('app', 'Changed'),
             'date' => Yii::t('app', 'Date'),
+            'month' => Yii::t('app', 'Month'),
         ];
     }
 
