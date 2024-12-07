@@ -4,6 +4,7 @@ namespace hesabro\helpers\components\iconify;
 
 use Exception;
 use Yii;
+use yii\helpers\Html;
 
 class Iconify
 {
@@ -49,7 +50,9 @@ class Iconify
         return $icons;
     }
 
-    public function icon(string $name, string $htmlClass = ''): string
+    /** @var array $options It
+     */
+    public function icon(string $name, string $htmlClass = '', array $options = []): string
     {
         if (!str_contains($name, ':')) {
             return '';
@@ -58,6 +61,13 @@ class Iconify
         [$iconSet, $iconName] = explode(':', $name);
         $icons = $this->getIconSet($iconSet);
         $icon = trim(($icons[$iconName]['body'] ?? ''));
-        return str_starts_with($icon, '<svg') ? $icon : "<svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' class='$htmlClass' viewBox='0 0 256 256'>$icon</svg>";
+        return str_starts_with($icon, '<svg') ? $icon : Html::tag('svg', $icon, [
+            'xmlns' => 'http://www.w3.org/2000/svg',
+            'width' => '1em',
+            'height' => '1em',
+            'class' => $htmlClass,
+            'viewBox' => '0 0 256 256',
+            ...$options
+        ]);
     }
 }
