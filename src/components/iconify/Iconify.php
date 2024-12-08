@@ -61,13 +61,12 @@ class Iconify
         [$iconSet, $iconName] = explode(':', $name);
         $icons = $this->getIconSet($iconSet);
         $icon = trim(($icons[$iconName]['body'] ?? ''));
-        return str_starts_with($icon, '<svg') ? $icon : Html::tag('svg', $icon, [
+        return str_starts_with($icon, '<svg') ? $icon : Html::tag('svg', $icon, array_merge([
             'xmlns' => 'http://www.w3.org/2000/svg',
             'width' => '1em',
             'height' => '1em',
             'class' => $htmlClass,
-            'viewBox' => '0 0 256 256',
-            ...$options
-        ]);
+            'viewBox' => '0 0 256 256',]
+            , $options));
     }
 }
