@@ -9,6 +9,7 @@ use yii\base\InvalidArgumentException;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 use common\models\OauthSession;
+use yii\base\Model;
 
 /**
  * Class Helper
@@ -209,6 +210,17 @@ class Helper extends Component
         $currentParams = Yii::$app->getRequest()->getQueryParams();
         $currentParams[0] = '/' . Yii::$app->controller->getRoute();
         return array_replace_recursive($currentParams, []);
+    }
+
+    public static function errorSummary($models, $options = []): string
+    {
+        return strip_tags(Html::errorSummary($models, $options));
+    }
+
+    public static function getFirstError(Model $model): string
+    {
+        $errors = $model->getErrors();
+        return reset($errors)[0];
     }
 
     public static function convertObjectToArray($items)
